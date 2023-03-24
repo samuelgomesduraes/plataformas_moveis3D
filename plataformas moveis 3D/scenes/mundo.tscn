@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm5cnqukthey6"]
+
+[ext_resource type="PackedScene" uid="uid://l5e31ijv2n2x" path="res://scenes/plataforma_h.tscn" id="1_7pp8q"]
+[ext_resource type="PackedScene" uid="uid://dfcy64ofwbkrd" path="res://scenes/chao.tscn" id="2_m2ltw"]
+
+[node name="mundo" type="Node3D"]
+
+[node name="plataforma_h" parent="." instance=ExtResource("1_7pp8q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16218, 0)
+
+[node name="chao" parent="." instance=ExtResource("2_m2ltw")]
+transform = Transform3D(163.016, 0, 0, 0, 1, 0, 0, 0, 141.317, 0, 0.256367, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.673761, 0.738949, 0, -0.738949, 0.673761, 2.87637, 4.72649, 2.71137)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.839041, -0.20974, 0.502015, -0.544068, -0.323453, 0.774189, 0, -0.922706, -0.385504, 4.00646, 4.53391, -2.246)
+shadow_enabled = true
+shadow_blur = 4.649
+sky_mode = 1

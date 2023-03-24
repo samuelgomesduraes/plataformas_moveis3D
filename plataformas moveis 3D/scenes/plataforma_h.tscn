@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://l5e31ijv2n2x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_31gwa"]
+size = Vector3(1, 0.281, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ggqst"]
+size = Vector3(1, 0.278, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xista"]
+albedo_color = Color(0.109804, 0.337255, 1, 1)
+
+[sub_resource type="Animation" id="Animation_nq0pa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../caminho/seguir_caminho:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_4i5e0"]
+resource_name = "a_para_b"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../caminho/seguir_caminho:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4.1, 7.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8uffj"]
+_data = {
+"RESET": SubResource("Animation_nq0pa"),
+"a_para_b": SubResource("Animation_4i5e0")
+}
+
+[sub_resource type="Curve3D" id="Curve3D_ajl1i"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.00812632, -0.00811654, 0, 0, 0, 0, 0, 0, 0, 2.66309, -0.00327352, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="plataforma_h" type="Node3D"]
+
+[node name="corpo" type="CharacterBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.00181296, 0.999956, -2.03173e-17, 0.999956, 0.00181296, -1, 7.9247e-11, -4.37095e-08, -0.00812632, -0.00811654, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="corpo"]
+shape = SubResource("BoxShape3D_31gwa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="corpo"]
+mesh = SubResource("BoxMesh_ggqst")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_xista")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../corpo")
+autoplay = "a_para_b"
+libraries = {
+"": SubResource("AnimationLibrary_8uffj")
+}
+
+[node name="caminho" type="Path3D" parent="."]
+curve = SubResource("Curve3D_ajl1i")
+
+[node name="seguir_caminho" type="PathFollow3D" parent="caminho"]
+transform = Transform3D(-4.37114e-08, -0.00181289, 0.999916, 0, 0.999916, 0.00181289, -1, 7.92438e-11, -4.37077e-08, -0.00812632, -0.00811654, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="caminho/seguir_caminho"]
+transform = Transform3D(1, 0, 0, -1.38778e-17, 1.00004, 1.16415e-10, -3.55271e-15, -1.16415e-10, 1.00004, 0, 0, 0)
+remote_path = NodePath("../../../corpo")
